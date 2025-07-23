@@ -1,0 +1,27 @@
+--- rte_jhash.h	2025-07-23 17:26:29.014875174 +0300
++++ rte_jhash_fix.h	2025-07-23 12:20:03.126675002 +0300
+@@ -81,6 +81,8 @@
+ __rte_jhash_2hashes(const void *key, uint32_t length, uint32_t *pc,
+ 		uint32_t *pb, unsigned check_align)
+ {
++	const uint32_t *k;
++	uint32_t s;
+ 	uint32_t a, b, c;
+ 
+ 	/* Set up the internal state */
+@@ -92,11 +94,11 @@
+ 	 * If check_align is not set, first case will be used
+ 	 */
+ #if defined(RTE_ARCH_X86)
+-	const uint32_t *k = (const uint32_t *)key;
+-	const uint32_t s = 0;
++	k = (const uint32_t *)key;
++	s = 0;
+ #else
+-	const uint32_t *k = (uint32_t *)((uintptr_t)key & (uintptr_t)~3);
+-	const uint32_t s = ((uintptr_t)key & 3) * CHAR_BIT;
++	k = (uint32_t *)((uintptr_t)key & (uintptr_t)~3);
++	s = ((uintptr_t)key & 3) * CHAR_BIT;
+ #endif
+ 	if (!check_align || s == 0) {
+ 		while (length > 12) {

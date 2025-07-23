@@ -1,0 +1,16 @@
+--- rte_atomic_64.h	2025-04-23 13:31:45.000000000 +0300
++++ rte_atomic_64_fix.h	2025-07-23 11:46:54.513747942 +0300
+@@ -190,11 +190,11 @@
+ 			   int success,
+ 			   int failure)
+ {
++	uint8_t res;
+ 	RTE_SET_USED(weak);
+ 	RTE_SET_USED(success);
+ 	RTE_SET_USED(failure);
+-	uint8_t res;
+-
++	
+ 	asm volatile (
+ 		      MPLOCKED
+ 		      "cmpxchg16b %[dst];"

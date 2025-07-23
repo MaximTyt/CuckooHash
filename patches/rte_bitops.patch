@@ -1,0 +1,130 @@
+--- rte_bitops.h	2025-04-23 13:31:45.000000000 +0300
++++ rte_bitops_fix.h	2025-07-23 12:11:58.530135679 +0300
+@@ -673,9 +673,10 @@
+ static inline uint32_t
+ rte_bit_relaxed_get32(unsigned int nr, volatile uint32_t *addr)
+ {
++	uint32_t mask;
+ 	RTE_ASSERT(nr < 32);
+ 
+-	uint32_t mask = UINT32_C(1) << nr;
++	mask = UINT32_C(1) << nr;
+ 	return (*addr) & mask;
+ }
+ 
+@@ -690,9 +691,10 @@
+ static inline void
+ rte_bit_relaxed_set32(unsigned int nr, volatile uint32_t *addr)
+ {
++	uint32_t mask;
+ 	RTE_ASSERT(nr < 32);
+ 
+-	uint32_t mask = RTE_BIT32(nr);
++	mask = RTE_BIT32(nr);
+ 	*addr = (*addr) | mask;
+ }
+ 
+@@ -707,9 +709,10 @@
+ static inline void
+ rte_bit_relaxed_clear32(unsigned int nr, volatile uint32_t *addr)
+ {
++	uint32_t mask;
+ 	RTE_ASSERT(nr < 32);
+ 
+-	uint32_t mask = RTE_BIT32(nr);
++	mask = RTE_BIT32(nr);
+ 	*addr = (*addr) & (~mask);
+ }
+ 
+@@ -727,10 +730,11 @@
+ static inline uint32_t
+ rte_bit_relaxed_test_and_set32(unsigned int nr, volatile uint32_t *addr)
+ {
++	uint32_t mask, val;
+ 	RTE_ASSERT(nr < 32);
+ 
+-	uint32_t mask = RTE_BIT32(nr);
+-	uint32_t val = *addr;
++	mask = RTE_BIT32(nr);
++	val = *addr;
+ 	*addr = val | mask;
+ 	return val & mask;
+ }
+@@ -749,10 +753,11 @@
+ static inline uint32_t
+ rte_bit_relaxed_test_and_clear32(unsigned int nr, volatile uint32_t *addr)
+ {
++	uint32_t mask, val;
+ 	RTE_ASSERT(nr < 32);
+ 
+-	uint32_t mask = RTE_BIT32(nr);
+-	uint32_t val = *addr;
++	mask = RTE_BIT32(nr);
++	val = *addr;
+ 	*addr = val & (~mask);
+ 	return val & mask;
+ }
+@@ -772,9 +777,10 @@
+ static inline uint64_t
+ rte_bit_relaxed_get64(unsigned int nr, volatile uint64_t *addr)
+ {
++	uint64_t mask;
+ 	RTE_ASSERT(nr < 64);
+ 
+-	uint64_t mask = RTE_BIT64(nr);
++	mask = RTE_BIT64(nr);
+ 	return (*addr) & mask;
+ }
+ 
+@@ -789,9 +795,10 @@
+ static inline void
+ rte_bit_relaxed_set64(unsigned int nr, volatile uint64_t *addr)
+ {
++	uint64_t mask;
+ 	RTE_ASSERT(nr < 64);
+ 
+-	uint64_t mask = RTE_BIT64(nr);
++	mask = RTE_BIT64(nr);
+ 	(*addr) = (*addr) | mask;
+ }
+ 
+@@ -806,9 +813,10 @@
+ static inline void
+ rte_bit_relaxed_clear64(unsigned int nr, volatile uint64_t *addr)
+ {
++	uint64_t mask;
+ 	RTE_ASSERT(nr < 64);
+ 
+-	uint64_t mask = RTE_BIT64(nr);
++	mask = RTE_BIT64(nr);
+ 	*addr = (*addr) & (~mask);
+ }
+ 
+@@ -826,10 +834,11 @@
+ static inline uint64_t
+ rte_bit_relaxed_test_and_set64(unsigned int nr, volatile uint64_t *addr)
+ {
++	uint64_t mask, val;
+ 	RTE_ASSERT(nr < 64);
+ 
+-	uint64_t mask = RTE_BIT64(nr);
+-	uint64_t val = *addr;
++	mask = RTE_BIT64(nr);
++	val = *addr;
+ 	*addr = val | mask;
+ 	return val;
+ }
+@@ -848,10 +857,11 @@
+ static inline uint64_t
+ rte_bit_relaxed_test_and_clear64(unsigned int nr, volatile uint64_t *addr)
+ {
++	uint64_t mask, val;
+ 	RTE_ASSERT(nr < 64);
+ 
+-	uint64_t mask = RTE_BIT64(nr);
+-	uint64_t val = *addr;
++	mask = RTE_BIT64(nr);
++	val = *addr;
+ 	*addr = val & (~mask);
+ 	return val & mask;
+ }
